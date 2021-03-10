@@ -52,7 +52,7 @@ const storiesReducer = (state, action) => {
 //    url: 'https://reactjs.org/',
 //    author: 'Jordan Walke',
 //    num_comments: 3,
-//    points: 4,
+//    points: 4,```````````````````````````````````````````````````````
 //    objectID: 0,
 //  },
 //  {
@@ -90,13 +90,15 @@ const App = () => {
 
   // const[isError, setIsError] = React.useState(false);
 
+    const[url, setUrl] = React.useState(`${API_ENDPOINT}${searchTerm}`)
+
   React.useEffect(() => {
 
     if(!searchTerm) return;
 
     dispatchStories({ type: 'STORIES_FETCH_INIT'});
 
-    fetch(`${API_ENDPOINT}${searchTerm}`)
+    fetch(url)
     .then(response => response.json())
 
     .then(result => {
@@ -109,7 +111,7 @@ const App = () => {
     .catch(() => dispatchStories({
       type: 'STORIES_FETCH_FAILURE',
     }));
-  }, [searchTerm]);
+  }, url);
 
   const handleRemovedStories = item => {
     // const newStories = stories.filter(story =>{
@@ -130,6 +132,10 @@ const App = () => {
   //   'React'
   // );
 
+const handleSearchSubmit = () => {
+  setUrl(`${API_ENDPOINT}${searchTerm}`)
+};
+
   const searchedStories = stories.data.filter(story =>
     story.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -147,6 +153,12 @@ const App = () => {
         <strong>Search</strong>
       </InputWithLabel>
         
+        <button type = 'button'
+        disabled = {!searchTerm}
+        onClick = {handleSearchSubmit}
+        >
+         Submit 
+        </button>
       <hr />
       {stories.isError && <p>Something went wrong ..</p>}
       {stories.isLoading ? (
