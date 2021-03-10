@@ -7,9 +7,9 @@
   padding: 20px;
 
   background: #dfdeba; /* fallback for old browsers */
-  background: linear-gradient(to left, #618dec, #bceecb);
+  background: linear-gradient(to left, #0f0474, #060414);
 
-  color: #171212;
+  color: #8fd4e5;
 }
 
 .headline-primary {
@@ -54,7 +54,7 @@
 }
 
 .button_large {
-  padding: 10px;
+  padding: 7px;
 }
 
 .search-form {
