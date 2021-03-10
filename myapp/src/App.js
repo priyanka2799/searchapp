@@ -111,7 +111,7 @@ const App = () => {
     .catch(() => dispatchStories({
       type: 'STORIES_FETCH_FAILURE',
     }));
-  }, url);
+  }, [url]);
 
   const handleRemovedStories = item => {
     // const newStories = stories.filter(story =>{
@@ -132,33 +132,35 @@ const App = () => {
   //   'React'
   // );
 
-const handleSearchSubmit = () => {
-  setUrl(`${API_ENDPOINT}${searchTerm}`)
+const handleSearchSubmit = event => {
+  setUrl(`${API_ENDPOINT}${searchTerm}`);
+  event.preventDefault();
 };
 
-  const searchedStories = stories.data.filter(story =>
-    story.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  
 
  
 
   return (
-    <div>
-      <h1> Hello React</h1>
-      <InputWithLabel
-        id="search"
+    <div className='container'>
+      <h1 className='headline-primary'> Hello React</h1>
+        <div className= 'search-form'>
+          <InputWithLabel
+            id="search"
+            
+            value={searchTerm}
+            onInputChange={handleSearch}>
+            <strong>Search</strong>
+          </InputWithLabel>
+            
+            <button className = 'button button_large' type = 'button'
+            disabled = {!searchTerm}
+            onClick = {handleSearchSubmit}
+            >
+            Submit 
+            </button>
+          </div>
         
-        value={searchTerm}
-        onInputChange={handleSearch}>
-        <strong>Search</strong>
-      </InputWithLabel>
-        
-        <button type = 'button'
-        disabled = {!searchTerm}
-        onClick = {handleSearchSubmit}
-        >
-         Submit 
-        </button>
       <hr />
       {stories.isError && <p>Something went wrong ..</p>}
       {stories.isLoading ? (
@@ -181,9 +183,9 @@ const InputWithLabel = ({
   isFocused
 }) => (
   <>
-    <label htmlFor={id}>{children}</label>
+    <label className='label' htmlFor={id}>{children}</label>
     &nbsp;
-    <input
+    <input className='input'
       id={id}
       type={type}
       value={value}
@@ -198,15 +200,15 @@ const List = ({items, onRemoveItem}) =>{
   return(
     <div>
         {items.map(function(item) {
-          return (<div key={item.objectID}>
-            <span>
+          return (<div className="item" key={item.objectID}>
+            <span style={{width:'40%'}}>
               <a href={item.url}>{item.title}</a>
             </span>
-            <span>{item.author}</span>
-            <span>{item.num_comments}</span>
-            <span>{item.points}</span>
-            <span>
-              <button type="button" onClick={() => { 
+            <span style={{width:'30%'}}>{item.author}</span>
+            <span style={{width:'10%'}}>{item.num_comments}</span>
+            <span style={{width:'10%'}}>{item.points}</span>
+            <span style={{width:'10%'}}>
+              <button className="button button_small" type="button" onClick={() => { 
                 
                 onRemoveItem(item)
               }}
@@ -222,4 +224,3 @@ const List = ({items, onRemoveItem}) =>{
 }
 
 export default App;
-
